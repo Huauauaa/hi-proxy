@@ -39,8 +39,8 @@ import minimist from 'minimist';
 import { createOpenAIGateway, textOf, type GatewayLogRecord, type GatewayMode } from './openai-gateway.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-/** 项目根目录（源码在 src/ 下，运行产物在 dist/ 下，都往上退一层） */
-const ROOT_DIR = path.resolve(__dirname, '..');
+/** 仓库根目录（monorepo 中源码位于 apps/server/src，运行产物在 apps/server/dist，都往上退三层） */
+const ROOT_DIR = path.resolve(__dirname, '../../..');
 
 const args = minimist(process.argv.slice(2), {
   string: ['port', 'upstream', 'web-upstream', 'model', 'log-dir', 'header', 'body-limit', 'mode', 'api-key'],

@@ -5,3 +5,5 @@ logs/
 .DS_Store
 .env
 .env.*
+.pnpm-store/
+*.tsbuildinfo

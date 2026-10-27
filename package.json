@@ -2,31 +2,19 @@
   "name": "hi-proxy",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
   "packageManager": "pnpm@11.7.0",
-  "description": "OpenAI-compatible gateway / reverse proxy for the OpenTiny GenUI playground model service",
+  "description": "Monorepo: OpenAI-compatible gateway (apps/server) + chat web UI (apps/web)",
   "engines": {
     "node": ">=18"
   },
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "start": "tsx src/index.ts",
-    "build": "tsc -p tsconfig.json",
-    "serve": "node dist/index.js",
-    "typecheck": "tsc --noEmit",
-    "test": "tsx --test test/*.test.ts"
-  },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^5.1.0",
-    "minimist": "^1.2.8"
-  },
-  "devDependencies": {
-    "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.1",
-    "@types/minimist": "^1.2.5",
-    "@types/node": "^22.10.0",
-    "tsx": "^4.19.0",
-    "typescript": "^5.7.0"
+    "dev": "pnpm -F @hi-proxy/server dev",
+    "start": "pnpm -F @hi-proxy/server start",
+    "build": "pnpm -r build",
+    "serve": "pnpm -F @hi-proxy/server serve",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -F @hi-proxy/server test",
+    "web": "pnpm -F @hi-proxy/web dev",
+    "web:build": "pnpm -F @hi-proxy/web build"
   }
 }

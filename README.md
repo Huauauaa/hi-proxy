@@ -122,21 +122,29 @@ tail -n 10 logs/summary.jsonl | jq -c '{at,path,status,durationMs,ttfbMs,promptC
 
 ## 开发
 
+monorepo（pnpm workspace）：`apps/server` 网关 + `apps/web` 聊天页面（React + Vite + Tailwind）。以下命令都在仓库根执行：
+
 ```bash
-pnpm dev        # tsx watch
-pnpm typecheck  # tsc --noEmit
-pnpm test       # node:test + tsx，上游用本地 http server 模拟，不走真实网络
-pnpm build      # tsc → dist/
-pnpm serve      # node dist/index.js
+pnpm dev        # 启动网关（tsx watch，默认 3010）
+pnpm start      # 启动网关（不 watch）
+pnpm test       # 网关单元测试（node:test + tsx，上游用本地 http server 模拟，不走真实网络）
+pnpm build      # 构建所有包（server: tsc → dist/；web: vite build → dist/）
+pnpm typecheck  # 全 workspace 类型检查
+pnpm web        # 启动聊天页面开发服务器（5173，/v1 自动反代到 3010）
+pnpm web:build  # 构建聊天页面
 ```
+
+聊天页面：`pnpm dev` + `pnpm web` 后访问 http://localhost:5173 ，模型列表来自 `/v1/models`，流式输出。
 
 ## 目录结构
 
 ```
-src/index.ts            代理进程：三种路由 + 命令行 + 落盘
-src/openai-gateway.ts   OpenAI 兼容网关：模型映射、SSE 转换、工具调用模拟
-test/openai-gateway.test.ts
-logs/                   抓包目录（git 忽略）
+apps/server/            网关包（@hi-proxy/server）
+  src/index.ts            代理进程：三种路由 + 命令行 + 落盘
+  src/openai-gateway.ts   OpenAI 兼容网关：模型映射、SSE 转换、工具调用模拟
+  test/openai-gateway.test.ts
+apps/web/               聊天页面（@hi-proxy/web，React + Vite + Tailwind）
+logs/                   抓包目录（git 忽略，位于仓库根）
 ```
 
 ## 注意
