@@ -23,6 +23,8 @@ pnpm start                 # 默认 3010 端口
 - 原版 playground UI（流量走本地）：`http://localhost:3010/genui-sdk/playground/`
 - 健康检查：`http://localhost:3010/__proxy/health`
 
+想直接在浏览器里对话：另开一个终端跑 `pnpm web`，访问 `http://localhost:5173`（自带聊天页，见[开发](#开发)）。
+
 ```bash
 # 模型列表
 curl http://localhost:3010/v1/models
@@ -63,7 +65,7 @@ pnpm 直接跟参数即可，不需要 npm 那样的 `--` 分隔符。
 | `--header` | 无 | 额外注入上游的请求头，如 `--header "authorization: Bearer xxx"`，可重复 |
 | `--no-web` | 页面透传开启 | 只做网关 / API 代理，不透传页面 |
 | `--no-log` | 落盘开启 | 只转发不落盘 |
-| `--log-dir` | `./logs` | 抓包目录 |
+| `--log-dir` | `<仓库根>/logs` | 抓包目录（相对仓库根，与启动时 cwd 无关） |
 | `--body-limit` | `100mb` | 请求体上限 |
 | `--quiet` | 关闭 | 少打印 |
 | `-h, --help` | — | 打印源文件头部注释里的用法 |
@@ -130,6 +132,7 @@ pnpm start      # 启动网关（不 watch）
 pnpm test       # 网关单元测试（node:test + tsx，上游用本地 http server 模拟，不走真实网络）
 pnpm build      # 构建所有包（server: tsc → dist/；web: vite build → dist/）
 pnpm typecheck  # 全 workspace 类型检查
+pnpm serve      # 运行构建产物（node apps/server/dist/index.js）
 pnpm web        # 启动聊天页面开发服务器（5173，/v1 自动反代到 3010）
 pnpm web:build  # 构建聊天页面
 ```
